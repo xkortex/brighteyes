@@ -1,8 +1,9 @@
 from __future__ import print_function
-from brighteyes.xrandr import Xrandr
-from brighteyes.monitors import Monitors
 import argparse
 
+from brighteyes.xrandr import Xrandr
+from brighteyes.monitors import Monitors
+from brighteyes.config import cfgget, cfgset
 
 def set_arg_parser():
     parser = argparse.ArgumentParser(description='Brighteyes - better command line tool for monitor control')
@@ -20,7 +21,7 @@ def set_arg_parser():
                         help="Decrease brightness one tick")
     return parser
 
-if __name__ == "__main__":
+def main():
     parser = set_arg_parser()
     args = parser.parse_args()
     verbose = args.verbose
@@ -32,3 +33,15 @@ if __name__ == "__main__":
     if args.bright:
         print('set brightness', args.bright)
         mons.brightness = args.bright
+        return
+
+    if args.up:
+        mons.inc_bright()
+        return
+
+    if args.down:
+        mons.dec_bright()
+        return
+
+if __name__ == "__main__":
+    main()

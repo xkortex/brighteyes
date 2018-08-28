@@ -24,4 +24,14 @@ class Monitors(object):
         xr = Xrandr()
         [xr.set_brightness(mon, val) for mon in self.active]
 
+    def delta_bright(self, amt=0.1, bmax=1.0, bmin=0.1):
+        current = self.brightness[0] # kludge for now, no independence yet
+        newval = max([min([bmax, current+amt]), bmin])
+        print('newval', newval)
+        self.brightness = newval
 
+    def inc_bright(self, amt=0.1):
+        return self.delta_bright(amt=amt)
+
+    def dec_bright(self, amt=-0.1):
+        return self.delta_bright(amt=amt)
